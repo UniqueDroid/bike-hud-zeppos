@@ -117,11 +117,11 @@ Page({
     // Beide Zeilen ein Stueck tiefer.
     this.state.timeVal = hmUI.createWidget(hmUI.widget.TEXT, {
       x: 0,
-      y: px(50),
+      y: px(48),
       w: W,
-      h: px(30),
+      h: px(38),
       color: COLOR.dim,
-      text_size: px(24),
+      text_size: px(30),
       align_h: hmUI.align.CENTER_H,
       align_v: hmUI.align.CENTER_V,
       text: '00:00:00',
@@ -129,11 +129,11 @@ Page({
 
     this.state.statusVal = hmUI.createWidget(hmUI.widget.TEXT, {
       x: 0,
-      y: px(82),
+      y: px(88),
       w: W,
-      h: px(24),
+      h: px(28),
       color: COLOR.dim2,
-      text_size: px(18),
+      text_size: px(22),
       align_h: hmUI.align.CENTER_H,
       text: 'Suche GPS…',
     })
@@ -177,9 +177,9 @@ Page({
       x: M,
       y: px(384),
       w: colW,
-      h: px(44),
+      h: px(52),
       color: COLOR.distance,
-      text_size: px(34),
+      text_size: px(42),
       align_h: hmUI.align.CENTER_H,
       text: '0.00',
     })
@@ -198,9 +198,9 @@ Page({
       x: W - M - colW,
       y: px(384),
       w: colW,
-      h: px(44),
+      h: px(52),
       color: COLOR.avg,
-      text_size: px(34),
+      text_size: px(42),
       align_h: hmUI.align.CENTER_H,
       text: '0.0',
     })
