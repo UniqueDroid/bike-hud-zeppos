@@ -10,8 +10,18 @@ import { px } from '@zos/utils'
 // getLatitude()/getLongitude()/getStatus(), onChange() feuert ohne
 // Payload. Geschwindigkeit/Distanz muessen selbst aus aufeinanderfolgenden
 // Fixes berechnet werden (Haversine-Distanz / vergangene Zeit).
-const W = getDeviceInfo().width
-const H = getDeviceInfo().height
+// War vorher ein Modul-Top-Level-Aufruf, der VOR Page()/build() lief -
+// fehlte die Permission data:os.device.info (genau das war der Fall,
+// im app.json ursprünglich nur device:os.geolocation deklariert), ist
+// das gesamte Modul schon beim Laden gecrasht. Selbst "renderUI() zuerst
+// in build()" half dagegen nicht, weil der Crash noch VOR build() lag.
+// Jetzt in build() selbst, mit Fallback auf die bekannte PikeW-Aufloesung.
+// Bekannte Screen-Groesse als Fallback, falls getDeviceInfo() aus
+// irgendeinem Grund fehlschlaegt - PikeW/Bip Max: 432x514.
+const FALLBACK_W = 432
+const FALLBACK_H = 514
+let W = FALLBACK_W
+let H = FALLBACK_H
 
 const COLOR = {
   bg: 0x000000,
@@ -62,14 +72,23 @@ Page({
   },
 
   build() {
-    // renderUI() MUSS zuerst laufen: Jans erstes Testfoto zeigte nur den
-    // Statusbalken oben, sonst nichts - build() ist offenbar genau hier
-    // gecrasht (vermutlich new Geolocation(), da die GPS-Permission bei
-    // der allerersten Installation noch nicht gewaehrt/abgefragt war),
-    // bevor auch nur ein einziges eigenes Widget erzeugt wurde. Gleiche
-    // Lehre wie beim SystemInfo-Speicherplatz-Bug: eine riskante API
-    // niemals vor der UI aufrufen, sonst nimmt ein Crash dort die ganze
-    // Seite mit.
+    // getDeviceInfo() braucht data:os.device.info - die fehlte in
+    // app.json (nur device:os.geolocation war deklariert), und da W/H
+    // vorher ein Modul-Top-Level-Aufruf waren, ist das ganze Modul schon
+    // beim Laden gecrasht, weit VOR build()/renderUI(). Jetzt hier drin,
+    // defensiv, mit Fallback auf die bekannte PikeW-Aufloesung.
+    try {
+      const info = getDeviceInfo()
+      W = info.width
+      H = info.height
+    } catch (e) {
+      // W/H bleiben auf FALLBACK_W/FALLBACK_H
+    }
+
+    // renderUI() danach als erstes eigenes Widget-Erzeugen: Jans erstes
+    // Testfoto zeigte nur den Statusbalken oben, sonst nichts - jede
+    // riskante API vor der UI kann die ganze Seite mitreissen, wenn sie
+    // wirft. Gleiche Lehre wie beim SystemInfo-Speicherplatz-Bug.
     this.renderUI()
 
     try {

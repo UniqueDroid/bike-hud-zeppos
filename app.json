@@ -12,7 +12,7 @@
     "vender": "Jan",
     "description": "High-contrast GPS bike HUD"
   },
-  "permissions": ["device:os.geolocation"],
+  "permissions": ["device:os.geolocation", "data:os.device.info"],
   "runtime": {
     "apiVersion": { "compatible": "2.1.0", "target": "2.1.0", "minVersion": "2.1" }
   },
