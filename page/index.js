@@ -62,19 +62,32 @@ Page({
   },
 
   build() {
-    // Bleibt bis zu 1h an - laenger als ne durchschnittliche Fahrt dauert
-    // die meisten nicht, und laenger will man den Akku auf der Uhr auch
-    // nicht am Stueck opfern. setPageBrightTime setzt sich beim Verlassen
-    // der Seite automatisch zurueck.
-    setPageBrightTime({ brightTime: 60 * 60 * 1000 })
+    // renderUI() MUSS zuerst laufen: Jans erstes Testfoto zeigte nur den
+    // Statusbalken oben, sonst nichts - build() ist offenbar genau hier
+    // gecrasht (vermutlich new Geolocation(), da die GPS-Permission bei
+    // der allerersten Installation noch nicht gewaehrt/abgefragt war),
+    // bevor auch nur ein einziges eigenes Widget erzeugt wurde. Gleiche
+    // Lehre wie beim SystemInfo-Speicherplatz-Bug: eine riskante API
+    // niemals vor der UI aufrufen, sonst nimmt ein Crash dort die ganze
+    // Seite mit.
+    this.renderUI()
+
+    try {
+      setPageBrightTime({ brightTime: 60 * 60 * 1000 })
+    } catch (e) {
+      // kosmetisch - Display schaltet dann halt normal ab, kein Blocker
+    }
 
     this.state.startTime = Date.now()
-    this.state.geo = new Geolocation()
-    this.state.vibrator = new Vibrator()
-
-    this.renderUI()
-    this.startSensors()
     this.startClockTimer()
+
+    try {
+      this.state.geo = new Geolocation()
+      this.state.vibrator = new Vibrator()
+      this.startSensors()
+    } catch (e) {
+      this.state.statusVal.setProperty(hmUI.prop.TEXT, 'GPS nicht verfügbar')
+    }
   },
 
   renderUI() {
@@ -172,7 +185,17 @@ Page({
   },
 
   startSensors() {
-    this.state.onGeoChange = () => this.handleGeoChange()
+    // Wrapper faengt Fehler pro Callback ab, statt dass ein einzelner
+    // Fehlerhafter Fix den ganzen Listener (bzw. den setInterval-artigen
+    // Callback-Mechanismus dahinter) lahmlegt - selbe Lehre wie bei
+    // SystemInfos readDisk()-Bug.
+    this.state.onGeoChange = () => {
+      try {
+        this.handleGeoChange()
+      } catch (e) {
+        this.state.statusVal.setProperty(hmUI.prop.TEXT, 'GPS-Fehler')
+      }
+    }
     this.state.geo.start()
     this.state.geo.onChange(this.state.onGeoChange)
   },
