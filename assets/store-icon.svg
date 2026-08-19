@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141414" />
+      <stop offset="100%" stop-color="#000000" />
+    </linearGradient>
+  </defs>
+
+  <!-- Store-listing icon: 240x240, full-bleed circle, no padding -->
+  <circle cx="120" cy="120" r="120" fill="url(#bgGrad)" />
+
+  <g stroke-linecap="round">
+    <rect x="51" y="146" width="70" height="14" rx="7" fill="#00ff66" transform="rotate(-18 86 153)" />
+    <rect x="71" y="108" width="90" height="14" rx="7" fill="#00e5ff" transform="rotate(-18 116 115)" />
+    <rect x="91" y="70" width="90" height="14" rx="7" fill="#ffb300" transform="rotate(-18 136 77)" />
+  </g>
+</svg>
