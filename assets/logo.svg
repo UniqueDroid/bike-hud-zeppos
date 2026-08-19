@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 248" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141414" />
+      <stop offset="100%" stop-color="#000000" />
+    </linearGradient>
+  </defs>
+
+  <!-- In-App-Icon: 248x248, r=120, 4px transparenter Rand -->
+  <circle cx="124" cy="124" r="120" fill="url(#bgGrad)" />
+
+  <!-- Drei diagonale "Speed-Streaks" statt Balken - deutet Bewegung/
+       Tempo an, in den Akzentfarben der App selbst. -->
+  <g stroke-linecap="round">
+    <rect x="55" y="150" width="70" height="14" rx="7" fill="#00ff66" transform="rotate(-18 90 157)" />
+    <rect x="75" y="112" width="90" height="14" rx="7" fill="#00e5ff" transform="rotate(-18 120 119)" />
+    <rect x="95" y="74" width="90" height="14" rx="7" fill="#ffb300" transform="rotate(-18 140 81)" />
+  </g>
+</svg>

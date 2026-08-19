@@ -1,0 +1,32 @@
+{
+  "configVersion": "v3",
+  "app": {
+    "appId": 1008899,
+    "appName": "Bike HUD",
+    "appType": "app",
+    "version": {
+      "code": 1,
+      "name": "1.0.0"
+    },
+    "icon": "icon.png",
+    "vender": "Jan",
+    "description": "High-contrast GPS bike HUD"
+  },
+  "permissions": ["device:os.geolocation"],
+  "runtime": {
+    "apiVersion": { "compatible": "2.1.0", "target": "2.1.0", "minVersion": "2.1" }
+  },
+  "targets": {
+    "PikeW": {
+      "module": {
+        "page": { "pages": ["page/index"] }
+      },
+      "platforms": [{ "name": "PikeW", "deviceSource": 11206915 }]
+    }
+  },
+  "i18n": {
+    "en-US": { "appName": "Bike HUD" },
+    "de-DE": { "appName": "Bike HUD" }
+  },
+  "defaultLanguage": "en-US"
+}
