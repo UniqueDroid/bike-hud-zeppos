@@ -112,9 +112,12 @@ Page({
   renderUI() {
     const M = px(20)
 
+    // Jan: die Fahrzeit-Zeile war oben vom Statusbalken (App-Name+Uhrzeit)
+    // angeschnitten - gleiches Muster wie beim Titel im Nuki-Projekt.
+    // Beide Zeilen ein Stueck tiefer.
     this.state.timeVal = hmUI.createWidget(hmUI.widget.TEXT, {
       x: 0,
-      y: px(30),
+      y: px(50),
       w: W,
       h: px(30),
       color: COLOR.dim,
@@ -126,7 +129,7 @@ Page({
 
     this.state.statusVal = hmUI.createWidget(hmUI.widget.TEXT, {
       x: 0,
-      y: px(62),
+      y: px(82),
       w: W,
       h: px(24),
       color: COLOR.dim2,
